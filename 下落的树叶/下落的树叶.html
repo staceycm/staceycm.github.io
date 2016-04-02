@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>下落的树叶</title>
+	<style>
+		img{
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<script>
+		function Leaf(){
+			this.oImg = new Image;
+			this.width = parseInt(Math.random()*30)+50;
+			this.pos = {
+				top: 0,
+				left: parseInt(Math.random()*(document.documentElement.clientWidth-this.width))
+			};
+			this.speed = parseInt(Math.random()*30)+50;
+			this.ftop = parseInt(Math.random()*9)+1;
+  
+			this.fleft = parseInt(Math.random()*10)-5;
+			this.fallTime = parseInt(Math.random()*900)+100;
+			this.oImg.src='img/'+parseInt(Math.random()*4+1)+'.png'; 
+			this.oImg.style.left = this.pos.left + 'px';
+			this.oImg.style.top = this.pos.top;
+			this.oImg.style.width = this.width+'px';
+			document.body.appendChild(this.oImg);
+		};
+
+		Leaf.prototype.fall = function(){
+			var that = this;
+			setInterval(function(){
+				that.oImg.style.top = that.oImg.offsetTop+that.ftop+'px';
+				that.oImg.style.left = that.oImg.offsetLeft+that.fleft+'px';
+			},this.speed);
+		};
+
+		for(var i=0;i<8;i++){
+			(function(leaf){
+				setTimeout(function(){
+					leaf.fall();
+				},leaf.fallTime);
+			})(new Leaf);
+		}
+
+	</script>
+</body>
+</html>
